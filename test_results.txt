@@ -1,0 +1,96 @@
+=====================
+Question 1: Slughorn teaches his students that Amortentia smells different to each person. What food does Harry smell?
+Answer RAG: Harry smells the scent of treacle tart when he inhales Amortentia. 
+source: book6_half_blood_prince_Chapter_9_THE_HALF_BLOOD_PRINCE
+Right Answer: treacle tart, the woody scent of broomstick handle, and 'something flowery that he thought he might have smelled at the Burrow'
+=====================
+Question 2: What are the names of Severus Snape's parents?
+Answer RAG: Severus Snape's parents are Tobias Snape (his father) and Eileen Prince (his mother).
+source: severus_snape: Biography Early life (1960-1971)
+Right Answer: Tobias Snape (father) and Eileen Snape (Prince) (mother)
+=====================
+Question 3: What is the name of the Quidditch move where a seeker fake's seeing the snitch and dives to the ground but pulls out of the dive just in time, but the opposing seeker plummets to the ground?
+Answer RAG: The Quidditch move where a seeker fakes seeing the snitch and dives to the ground, but pulls out of the dive just in time, causing the opposing seeker to plummet to the ground is called the Wronski Feint.
+Right Answer: Wronsky Feint
+=====================
+Question 4: What is the first-ever password to Gryffindor Tower?
+Answer RAG: The first-ever password to Gryffindor Tower is not mentioned in the provided context. I don't know the answer to your question.
+Right Answer: Caput Draconis
+=====================
+Question 5: Why did Cormac McLaggen miss the Quidditch tryouts in the year previous to Harry Potter and the Half-Blood Prince?
+Answer RAG: I don't have information about why Cormac McLaggen missed the Quidditch tryouts the year prior to Harry Potter and the Half-Blood Prince in the provided context.
+Right Answer: He ate a pound of doxy eggs for a bet.
+=====================
+Question 6: What magical plant does Harry use to breathe underwater during the second task of the Triwizard Tournament?
+Answer RAG: Harry uses gillyweed, a magical plant, to breathe underwater during the second task of the Triwizard Tournament.
+source: book4_goblet_of_fire_Chapter_26_THE_SECOND_TASK
+Right Answer: Gillyweed
+=====================
+Question 7: Who is the ghost of Ravenclaw Tower, also known as 'The Grey Lady'?
+Answer RAG: The ghost of Ravenclaw Tower, also known as 'The Grey Lady', is the ghostly representation of the House of Ravenclaw at Hogwarts School of Witchcraft and Wizardry. Her real name is Helena Ravenclaw. 
+source: book7_deathly_hollows_Chapter_31_THE_BATTLE_OF_HOGWARTS
+Right Answer: Helena Ravenclaw
+=====================
+Question 8: What is the core of Harry Potter's wand?
+Answer RAG: The core of Harry Potter's wand is phoenix feather.
+source: book1_philosophers_stone_Chapter_5_DIAGON_ALLY
+Right Answer: Phoenix feather
+=====================
+Question 9: Which potion allows the drinker to assume the form of someone else?
+Answer RAG: The potion that allows the drinker to assume the form of someone else is called the Polyjuice Potion.
+source: book2_chamber_of_secrets_Chapter_12_THE_POLY_JUICE_POTION
+Right Answer: Polyjuice Potion
+=====================
+Question 10: What is the name of the house-elf bound to serve the Black family?
+Answer RAG: The house-elf bound to serve the Black family is named Kreacher.
+source: book5_order_of_the_phoenix_Chapter_6_THE_NOBLE_AND_MOST_ANCIENT_HOUSE_OF_BLACK
+Right Answer: Kreacher
+=====================
+Question 11: Who destroys the final Horcrux, Nagini?
+Answer RAG: Neville Longbottom destroys the final Horcrux, Nagini, during the Battle of Hogwarts. 
+source: chapter neville_longbottom
+Right Answer: Neville Longbottom
+=====================
+Question 12: What is the full name of the spell used to disarm another wizard?
+Answer RAG: The full name of the spell used to disarm another wizard is "Expelliarmus." 
+source: book5_order_of_the_phoenix_Chapter_18_DUMBLEDORE’S_ARMY
+Right Answer: Expelliarmus
+=====================
+Question 13: What is Dumbledore's full name?
+Answer RAG: Dumbledore's full name is Albus Percival Wulfric Brian Dumbledore. 
+source: harry_potter
+Right Answer: Albus Percival Wulfric Brian Dumbledore
+=====================
+Question 14: Who is the Half-Blood Prince?
+Answer RAG: The Half-Blood Prince is a wizard who attended Hogwarts School of Witchcraft and Wizardry and was known for writing spells in his old Potions book. He invented several spells, including Levicorpus. It is revealed that the Half-Blood Prince is actually Severus Snape, who later becomes the Potions teacher at Hogwarts. This information can be found in several chapters, including "book6_half_blood_prince_Chapter_30_THE_WHITE_TOMB" and "book6_half_blood_prince_Chapter_16_A_VERY_FROSTY_CHRISTMAS" from the book "Harry Potter and the Half-Blood Prince".
+Right Answer: Severus Snape
+=====================
+Question 15: What creature is Aragog?
+Answer RAG: Aragog is an Acromantula, a giant spider. It is an ancient creature that is feared by spiders. 
+Source: chapter rubeus_hagrid and book2_chamber_of_secrets_Chapter_15_ARAGOG
+Right Answer: Acromantula
+=====================
+Question 16: What does the spell 'Lumos' do?
+Answer RAG: The provided excerpts do not mention the spell "Lumos." Therefore, based on my knowledge of the Harry Potter series, I can tell you that the spell "Lumos" is used to create a beam of light from the tip of the caster's wand. It is often used to illuminate dark areas. 
+
+Hypothesis: The spell "Lumos" may not be mentioned in the provided excerpts because it is not directly related to the topic of the Patronus Charm or the conversation between Harry and Lupin.
+Right Answer: Produces light from the wand tip
+=====================
+Question 17: Who was the Defense Against the Dark Arts teacher in Harry Potter's first year?
+Answer RAG: The Defense Against the Dark Arts teacher in Harry Potter's first year was Quirinus Quirrell.
+source: harry_potter
+Right Answer: Professor Quirrell
+=====================
+Question 18: What is the name of Ron Weasley's rat?
+Answer RAG: The name of Ron Weasley's rat is Scabbers.
+source: ron_weasley
+Right Answer: Scabbers
+=====================
+Question 19: What position does Harry Potter play on his Quidditch team?
+Answer RAG: Harry Potter plays as the Seeker on his Quidditch team.
+source: book1_philosophers_stone
+Right Answer: Seeker
+=====================
+Question 20: What is the name of the object used by Dumbledore to review memories?
+Answer RAG: The object used by Dumbledore to review memories is called the Pensieve.
+Right Answer: Pensieve
