@@ -16,7 +16,7 @@ base_directory = "/home/florent/Desktop/AI_Projects/HP_Genious/books"
 collection_name = "hp_genious"
 
 # Initialize Qdrant client
-qdrant_client = QdrantClient(url="http://localhost:6333")
+qdrant_client = QdrantClient(url="http://localhost:6333") # Started using docker
 
 # Recreate collection in Qdrant for new data
 qdrant_client.recreate_collection(
