@@ -42,7 +42,7 @@ Book: {item['book']}
 {item['text']}\n\n"""
         
     context_prompt += """
-You are given extracts of books in the context. Using those extracts, respond to the question. 
+You are given extracts of books in the context. Using those extracts, respond to the question of the user. 
 If the information is not available in the context, answer with 'I don't know', else the answer
 should have this format:
 
@@ -50,7 +50,6 @@ should have this format:
 source: <the used book from the context>
 """
     
-    # Single system message as per requirement
     messages = [
         {"role": "system", "content": context_prompt},
         {"role": "user", "content": question}
