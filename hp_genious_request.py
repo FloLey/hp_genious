@@ -4,7 +4,6 @@ from llama_index.embeddings import HuggingFaceEmbedding
 from openai import OpenAI
 import os
 
-# Load the OpenAI API key securely from an environment variable
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     raise ValueError("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
@@ -24,7 +23,6 @@ def get_data(query: str, top_k: int) -> List[dict]:
             query_vector=encoded_query,
             limit=top_k,
         )
-        # Adjusted to capture book information alongside text
         data = [{"text": x.payload['text'], "book": x.payload['book']} for x in result]
         return data
     except Exception as e:
@@ -33,7 +31,6 @@ def get_data(query: str, top_k: int) -> List[dict]:
 
 def create_chat_messages(question: str) -> List[dict]:
     data = get_data(question, top_k=5)
-    # Build the context prompt with book names
     context_prompt = "Context:\n"
     for item in data:
         context_prompt += f"""
