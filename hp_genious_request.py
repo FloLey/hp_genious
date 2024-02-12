@@ -40,12 +40,14 @@ def create_chat_messages(question: str) -> List[dict]:
 """
         
     context_prompt += """
-You are given extracts of books in the context. Using those extracts, respond to the question of the user. 
-If the information is not available in the context, answer with 'I don't know', else the answer
-should have this format:
+you are provided with excerpts from books relevant to the context. 
+Use these excerpts to address the user's question. 
+You may engage in hypothesizing to form an educated guess, but ensure to clearly indicate when you are doing so. 
+If the necessary information is not contained within the provided context, respond with 'I don't know'. 
+When you have sufficient information to answer, please adhere to the following format:
 
 <answer to the question>
-source: <the used book from the context>
+source: <the used chapter from the context>
 """
     
     messages = [
@@ -68,10 +70,25 @@ def ask_with_rag(messages: List[dict], model="gpt-3.5-turbo"):
         return "An error occurred while processing your request."
 
 
-question = "Slughorn teaches his students that Amortentia smells different to each person. What food does Harry smell?"
-messages=create_chat_messages(question)
-for m in messages:
-    print(m)
-response = ask_with_rag(messages)
-print("=====================")
-print(response)
+
+q1 = "Slughorn teaches his students that Amortentia smells different to each person. What food does Harry smell?"
+a1="treacle tart, the woody scent of broomstick handle, and 'something flowery that he thought he might have smelled at the Burrow'"
+q2 = "What are the names of Severus Snape's parents?"
+a2="Tobias Snape (father) and Eileen Snape (Prince) (mother)"
+q3 = "What is the name of the Quidditch move where a seeker fake's seeing the snitch and dives to the ground but pulls out of the dive just in time, but the opposing seeker plummets to the ground?"
+a3="Wronsky Feint"
+q4="What is the first-ever password to Gryffindor Tower?"
+a4="Caput Draconis"
+q5= "Why did Cormac McLaggen miss the Quidditch tryouts in the year previous to Harry Potter and the Half-Blood Prince?"
+a5="He ate a pound of doxy eggs for a bet."
+
+questions=[q1,q2,q3,q4,q5]
+answers =[a1,a2,a3,a4,a5]
+
+for i, q in enumerate(questions):
+    messages = create_chat_messages(q)  
+    response = ask_with_rag(messages)
+    print("=====================")
+    print(f"====Question{i+1}: {q}")
+    print(f"Answer RAG: {response}")
+    print(f"Right Answer: {answers[i]}")
