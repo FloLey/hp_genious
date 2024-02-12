@@ -34,9 +34,10 @@ def create_chat_messages(question: str) -> List[dict]:
     context_prompt = "Context:\n"
     for item in data:
         context_prompt += f"""
-Book: {item['book']}
 
-{item['text']}\n\n"""
+{item['text']}
+
+"""
         
     context_prompt += """
 You are given extracts of books in the context. Using those extracts, respond to the question of the user. 
@@ -54,7 +55,7 @@ source: <the used book from the context>
     
     return messages
 
-def ask_openai_with_rag(messages: List[dict], model="gpt-3.5-turbo"):
+def ask_with_rag(messages: List[dict], model="gpt-3.5-turbo"):
     try:        
         response = client.chat.completions.create(
             model=model,
@@ -71,6 +72,6 @@ question = "Slughorn teaches his students that Amortentia smells different to ea
 messages=create_chat_messages(question)
 for m in messages:
     print(m)
-response = ask_openai_with_rag(messages)
+response = ask_with_rag(messages)
 print("=====================")
 print(response)
