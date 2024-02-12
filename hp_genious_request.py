@@ -40,7 +40,7 @@ def create_chat_messages(question: str) -> List[dict]:
 """
         
     context_prompt += """
-you are provided with excerpts from books relevant to the context. 
+you are provided with excerpts from books. 
 Use these excerpts to address the user's question. 
 You may engage in hypothesizing to form an educated guess, but ensure to clearly indicate when you are doing so. 
 If the necessary information is not contained within the provided context, respond with 'I don't know'. 
