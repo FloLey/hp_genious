@@ -7,7 +7,7 @@ from qdrant_client.models import Distance, VectorParams, SparseIndexParams, Spar
 from tqdm import tqdm
 
 # Initialize embedding model
-embed_model = HuggingFaceEmbedding(model_name="WhereIsAI/UAE-Large-V1")
+embed_model = HuggingFaceEmbedding(model_name="WhereIsAI/UAE-Large-V1", pooling="cls")
 
 # Base directory containing all books
 base_directory = "/home/florent/Desktop/AI_Projects/HP_Genious/books"
@@ -17,24 +17,8 @@ collection_name = "hp_genious"
 vector_name = "hp_genious_vector"
 
 
-# Initialize Qdrant client
-qdrant_client = QdrantClient(url="http://localhost:6333") # Started using docker
-
-# Recreate collection in Qdrant for new data
-qdrant_client.recreate_collection(
-    collection_name=collection_name,
-    vectors_config=VectorParams(size=1024, distance=Distance.COSINE),
-    sparse_vectors_config={
-        vector_name: SparseVectorParams(
-            index=SparseIndexParams(
-                on_disk=True,
-            )
-        )
-    },
-)
-
 # Create entry points for Qdrant for a file
-def process_file(file_path, chunk_size, chunk_overlap, start_id=0):
+def process_file(qdrant_client, file_path, chunk_size, chunk_overlap, start_id=0):
     book_name = os.path.basename(os.path.dirname(file_path))
     chapter_name = os.path.splitext(os.path.basename(file_path))[0]
 
@@ -70,10 +54,32 @@ def process_file(file_path, chunk_size, chunk_overlap, start_id=0):
 
     return current_id
 
+
 # Iterate over all .txt files in the directory and its subdirectories with progress bar
-last_id = 0
-chunks =[(300,50),(600,100)]
-file_paths = glob.glob(f"{base_directory}/**/*.txt", recursive=True)
-for chunk_size, chunk_overlap in tqdm(chunks, desc="Processing chunks"):
-    for file_path in tqdm(file_paths, desc="Processing files"):
-        last_id = process_file(file_path, chunk_size=chunk_size, chunk_overlap=chunk_overlap, start_id=last_id)
+
+
+def create_db():
+    # Initialize Qdrant client
+    qdrant_client = QdrantClient(url="http://localhost:6333")  # Started using docker
+
+    # Recreate collection in Qdrant for new data
+    qdrant_client.recreate_collection(
+        collection_name=collection_name,
+        vectors_config=VectorParams(size=1024, distance=Distance.COSINE),
+        sparse_vectors_config={
+            vector_name: SparseVectorParams(
+                index=SparseIndexParams(
+                    on_disk=True,
+                )
+            )
+        },
+    )
+
+    last_id = 0
+    chunks = [(1200, 100), (600, 100)]
+    file_paths = glob.glob(f"{base_directory}/**/*.txt", recursive=True)
+    for chunk_size, chunk_overlap in tqdm(chunks, desc="Processing chunks"):
+        for file_path in tqdm(file_paths, desc="Processing files"):
+            last_id = process_file(qdrant_client, file_path, chunk_size=chunk_size, chunk_overlap=chunk_overlap,
+                                   start_id=last_id)
+
