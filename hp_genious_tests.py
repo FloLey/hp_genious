@@ -1,4 +1,3 @@
-import re
 import threading
 from langchain_core.pydantic_v1 import BaseModel, Field
 from pydantic.v1 import parse_obj_as
@@ -169,33 +168,49 @@ score:
     grade = (
             template
             | llm
-            | StrOutputParser()
             | output_parser_correction
     )
     result = grade.invoke({"question": question, "correct_answer": correct_answer, "given_answer": given_answer})
     return result
 
 
-def answer_question_with_timeout(question, use_rag, generate_question, timeout_seconds=60):
-    container = ResultContainer()
-
-    def target():
+def answer_question_with_timeout(question, use_rag, generate_question, timeout_seconds=60, retries=3):
+    # Function to execute the target function with timeout
+    def run_with_timeout():
         try:
-            container.result = answer_question(question=question, use_rag=use_rag, generate_question=generate_question)
+            thread = threading.Thread(target=target)
+            thread.start()
+            thread.join(timeout_seconds)
+            if thread.is_alive():
+                # If the thread is still alive, it means it's stuck and didn't finish in time
+                raise TimeoutError("The function took too long to complete")
         except Exception as e:
             container.exception = e
 
-    thread = threading.Thread(target=target)
-    thread.start()
-    thread.join(timeout_seconds)
-    if thread.is_alive():
-        thread.join()  # It's safer to join the thread even if it's timed out to avoid terminating it abruptly
-        raise TimeoutError("The function took too long to complete")
+    # Target function to be executed in a thread
+    def target():
+        try:
+            # Attempt to get the answer to the question
+            container.result = answer_question(question=question, use_rag=use_rag, generate_question=generate_question)
+            container.exception = None  # Reset exception if successful
+        except Exception as e:
+            container.exception = e
 
+    # Initial setup before retry loop
+    container = ResultContainer()
+    attempt = 0
+
+    # Retry loop
+    while attempt < retries:
+        run_with_timeout()  # Attempt to run the target function with timeout
+        if container.exception is None:
+            return container.result  # Return result if successful
+        else:
+            attempt += 1  # Increment attempt counter if there was an exception
+
+    # If we reach here, all retries have failed
     if container.exception:
-        raise container.exception
-
-    return container.result
+        raise container.exception  # Raise the last exception if all retries failed
 
 
 def answer_questions(output_file: str = 'hp_questions_and_answers.csv'):
@@ -212,7 +227,7 @@ def answer_questions(output_file: str = 'hp_questions_and_answers.csv'):
                                                                      generate_question=True)
                 results.append([question, correct_answer, simple_answer, rag_answer, multi_question_answer])
                 break  # Break the retry loop on success
-            except TimeoutError as e:
+            except Exception as e:
                 if attempt == max_retries - 1:  # Last retry
                     print(f"Failed to get an answer for '{question}' after {max_retries} attempts due to timeout.")
                     return  # Exit the function on repeated failures
@@ -286,12 +301,12 @@ def grade_answers(input_file='hp_questions_and_answers.csv', output_file='hp_que
     # Calculate and insert overall scores
     entries_count = df.shape[0]
     for column, total_score in total_scores.items():
-        overall_score = (total_score / entries_count*3) * 100
+        overall_score = (total_score / entries_count) * 100
         df[f'{column} Overall Score'] = overall_score
 
     df.to_csv(output_file, index=False)
 
 
-create_db()
+# create_db()
 answer_questions()
 grade_answers()
