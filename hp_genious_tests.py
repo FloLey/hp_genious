@@ -1,4 +1,6 @@
 import re
+import threading
+
 from tqdm import tqdm
 from hp_genious_create_db import create_db
 from hp_genious_request import answer_question
@@ -10,6 +12,13 @@ import csv
 
 llm = Ollama(model="mistral")
 output_parser = StrOutputParser()
+
+
+class ResultContainer:
+    def __init__(self):
+        self.result = None
+        self.exception = None
+
 
 questions = [
     "What does Harry accidentally do when he goes to the zoo?",
@@ -154,20 +163,48 @@ score:
     return result
 
 
+def answer_question_with_timeout(question, use_rag, generate_question, timeout_seconds=60):
+    container = ResultContainer()
+
+    def target():
+        try:
+            container.result = answer_question(question=question, use_rag=use_rag, generate_question=generate_question)
+        except Exception as e:
+            container.exception = e
+
+    thread = threading.Thread(target=target)
+    thread.start()
+    thread.join(timeout_seconds)
+    if thread.is_alive():
+        thread.join()  # It's safer to join the thread even if it's timed out to avoid terminating it abruptly
+        raise TimeoutError("The function took too long to complete")
+
+    if container.exception:
+        raise container.exception
+
+    return container.result
+
+
 def answer_questions(output_file: str = 'hp_questions_and_answers.csv'):
     results = []
+    max_retries = 3
 
     # Iterate over each question
-    for question, correct_answer in tqdm(zip(questions, answers), "question"):
-        # Get responses from each function
-        simple_answer = answer_question(question=question, use_rag=False, generate_question=False)
-        rag_answer = answer_question(question=question, use_rag=True, generate_question=False)
-        multi_question_answer = answer_question(question=question, use_rag=True, generate_question=True)
-
-        results.append([question, correct_answer, simple_answer, rag_answer, multi_question_answer])
+    for question, correct_answer in tqdm(zip(questions, answers), desc="Answering questions"):
+        for attempt in range(max_retries):
+            try:
+                simple_answer = answer_question_with_timeout(question=question, use_rag=False, generate_question=False)
+                rag_answer = answer_question_with_timeout(question=question, use_rag=True, generate_question=False)
+                multi_question_answer = answer_question_with_timeout(question=question, use_rag=True,
+                                                                     generate_question=True)
+                results.append([question, correct_answer, simple_answer, rag_answer, multi_question_answer])
+                break  # Break the retry loop on success
+            except TimeoutError as e:
+                if attempt == max_retries - 1:  # Last retry
+                    print(f"Failed to get an answer for '{question}' after {max_retries} attempts due to timeout.")
+                    return  # Exit the function on repeated failures
 
     csv_file_name = output_file
-
     headers = ['Question', 'Correct Answer', 'Simple Answer', 'RAG Answer', 'Multi-Question Answer']
 
     with open(csv_file_name, mode='w', newline='', encoding='utf-8') as file:

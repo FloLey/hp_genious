@@ -14,7 +14,6 @@ import os
 
 os.environ['LANGCHAIN_TRACING_V2'] = 'true'
 os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
-os.environ['LANGCHAIN_API_KEY'] = 'ls__e9a08eb25b094353a880897253a4ffd7'
 
 llm = Ollama(model="mistral:instruct")
 
