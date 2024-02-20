@@ -1,5 +1,6 @@
 from langchain_core.callbacks import CallbackManagerForRetrieverRun
 from langchain_core.prompts import PromptTemplate
+from pydantic.v1 import parse_obj_as
 from qdrant_client import QdrantClient
 from typing import List
 from llama_index.embeddings import HuggingFaceEmbedding
@@ -57,6 +58,10 @@ retriever = QdrantRetriever()
 class responseHP(BaseModel):
     answer: str = Field(description="The answer to the question")
     source: str = Field(description="The source that was used to answer the question")
+
+
+def dict_to_responseHP(dict_response):
+    return parse_obj_as(responseHP, dict_response)
 
 
 # Set up parsers
@@ -156,7 +161,6 @@ def answer_question(question: str, use_rag: bool = True, generate_question: bool
     )
     chain = rag_chain if use_rag else simple_chain
     return chain.invoke(question)
-
 
 # q = "Slughorn teaches his students that Amortentia smells different to each person. What food does Harry smell?"
 # a = answer_question(q, use_rag=True, generate_question=True)

@@ -76,7 +76,7 @@ def create_db():
     )
 
     last_id = 0
-    chunks = [(1200, 100), (600, 100)]
+    chunks = [(1000, 200)]
     file_paths = glob.glob(f"{base_directory}/**/*.txt", recursive=True)
     for chunk_size, chunk_overlap in tqdm(chunks, desc="Processing chunks"):
         for file_path in tqdm(file_paths, desc="Processing files"):
