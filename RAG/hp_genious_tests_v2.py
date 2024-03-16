@@ -91,18 +91,18 @@ questions_answers = [
     ("What specific ingredient is needed to make the Draught of Living Death?", "Powdered root of asphodel")
 ]
 qa_subset = [
-    ("What does Harry accidentally do when he goes to the zoo?", "Make the glass in the snake enclosure disappear"),
-    ("What are the names of Severus Snape's parents?", "Tobias Snape (father) and Eileen Snape (Prince) (mother)"),
-    (
-        "What is the name of the Quidditch move where a seeker fake's seeing the snitch and dives to the ground but "
-        "pulls"
-        "out of the dive just in time, but the opposing seeker plummets to the ground?",
-        "Wronsky Feint"),
-    ("What is the first-ever password to Gryffindor Tower?", "Caput Draconis"),
-    (
-        "Why did Cormac McLaggen miss the Quidditch tryouts in the year previous to Harry Potter and the Half-Blood "
-        "Prince?",
-        "He ate a pound of doxy eggs for a bet."),
+    # ("What does Harry accidentally do when he goes to the zoo?", "Make the glass in the snake enclosure disappear"),
+    # ("What are the names of Severus Snape's parents?", "Tobias Snape (father) and Eileen Snape (Prince) (mother)"),
+    # (
+    #     "What is the name of the Quidditch move where a seeker fake's seeing the snitch and dives to the ground but "
+    #     "pulls"
+    #     "out of the dive just in time, but the opposing seeker plummets to the ground?",
+    #     "Wronsky Feint"),
+    # ("What is the first-ever password to Gryffindor Tower?", "Caput Draconis"),
+    # (
+    #     "Why did Cormac McLaggen miss the Quidditch tryouts in the year previous to Harry Potter and the Half-Blood "
+    #     "Prince?",
+    #     "He ate a pound of doxy eggs for a bet."),
     ("What magical plant does Harry use to breathe underwater during the second task of the Triwizard Tournament?",
      "Gillyweed"),
     ("Who is the ghost of Ravenclaw Tower, also known as 'The Grey Lady'?", "Helena Ravenclaw"),
@@ -219,11 +219,13 @@ def grade_question(questions, answer_function, filename, retries=3, max_score_pe
 
 if __name__ == '__main__':
     configurations = [
-        (partial(answer_question, use_rag=False, generate_question=False), 'simple_prompt.csv'),
-        (partial(answer_question, use_rag=True, generate_question=False), 'simple_rag.csv'),
-        (partial(answer_question, use_rag=True, generate_question=True), 'rag_with_questions.csv'),
-        (partial(answer_question_decomposition, generate_question=False), 'rag_questions_decomposition.csv'),
+        # (partial(answer_question, use_rag=False, generate_question=False), 'simple_prompt.csv'),
+        # (partial(answer_question, use_rag=True, generate_question=False), 'simple_rag.csv'),
+        # (partial(answer_question, use_rag=True, generate_question=True), 'rag_with_questions.csv'),
+        # (partial(answer_question_decomposition, generate_question=False), 'rag_questions_decomposition.csv'),
         (partial(answer_question_decomposition, generate_question=True), 'rag_questions_decomposition_multi.csv'),
     ]
     for answer_func, filename in tqdm(configurations, desc="configurations"):
         grade_question(qa_subset, answer_func, filename)
+
+

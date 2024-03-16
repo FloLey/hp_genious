@@ -204,11 +204,11 @@ def format_qa_pair(question, answer, source):
 def answer_question_decomposition(question: str, generate_question: bool = False):
     format_instructions = output_parser_response.get_format_instructions()
     template = """
+    Here is some context relevant to the question: 
+    \n --- \n {context} \n --- \n
+
     Here are the available background questions and answer pairs:
     \n --- \n {q_a_pairs} \n --- \n
-    Here is additional context relevant to the question: 
-    \n --- \n {context} \n --- \n
-  
     {format_instructions}
     
     Here is the question you need to answer:
