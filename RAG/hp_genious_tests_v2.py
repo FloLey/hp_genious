@@ -219,10 +219,10 @@ def grade_question(questions, answer_function, filename, retries=3, max_score_pe
 
 if __name__ == '__main__':
     configurations = [
-        # (partial(answer_question, use_rag=False, generate_question=False), 'simple_prompt.csv'),
-        # (partial(answer_question, use_rag=True, generate_question=False), 'simple_rag.csv'),
-        # (partial(answer_question, use_rag=True, generate_question=True), 'rag_with_questions.csv'),
-        # (partial(answer_question_decomposition, generate_question=False), 'rag_questions_decomposition.csv'),
+        (partial(answer_question, use_rag=False, generate_question=False), 'simple_prompt.csv'),
+        (partial(answer_question, use_rag=True, generate_question=False), 'simple_rag.csv'),
+        (partial(answer_question, use_rag=True, generate_question=True), 'rag_with_questions.csv'),
+        (partial(answer_question_decomposition, generate_question=False), 'rag_questions_decomposition.csv'),
         (partial(answer_question_decomposition, generate_question=True), 'rag_questions_decomposition_multi.csv'),
     ]
     for answer_func, filename in tqdm(configurations, desc="configurations"):
